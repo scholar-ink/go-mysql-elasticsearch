@@ -1,3 +1,4 @@
+
 go-mysql-elasticsearch is a service syncing your MySQL data into Elasticsearch automatically.
 
 It uses `mysqldump` to fetch the origin data at first, then syncs data incrementally with binlog.
@@ -8,6 +9,10 @@ It uses `mysqldump` to fetch the origin data at first, then syncs data increment
 + `go get github.com/siddontang/go-mysql-elasticsearch`, it will print some messages in console, skip it. :-)
 + cd `$GOPATH/src/github.com/siddontang/go-mysql-elasticsearch`
 + `make`
+
+## Build Docker Image
+
++ ``docker build -t registry.cn-shanghai.aliyuncs.com/taoqi/my-es .``
 
 ## How to use?
 
