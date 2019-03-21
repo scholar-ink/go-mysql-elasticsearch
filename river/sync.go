@@ -15,6 +15,7 @@ import (
 	"github.com/siddontang/go-mysql/mysql"
 	"github.com/siddontang/go-mysql/replication"
 	"github.com/siddontang/go-mysql/schema"
+	"strconv"
 )
 
 const (
@@ -28,6 +29,8 @@ const (
 	// for the mysql int type to es date type
 	// set the [rule.field] created_time = ",date"
 	fieldTypeDate = "date"
+	fieldTypeTime   = "time"
+	fieldTypeGeo = "geo"
 )
 
 const mysqlDateFormat = "2006-01-02"
@@ -514,6 +517,39 @@ func (r *River) getFieldValue(col *schema.TableColumn, fieldType string, value i
 			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 				fieldValue = r.makeReqColumnData(col, time.Unix(v.Int(), 0).Format(mysql.TimeFormat))
 			}
+		}
+	case fieldTypeTime:
+		if col.Type == schema.TYPE_NUMBER {
+			col.Type = schema.TYPE_TIMESTAMP
+
+			v := reflect.ValueOf(value)
+			switch v.Kind() {
+			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64 :
+				fieldValue = r.makeReqColumnData(col, v.Int()*1000)
+			case reflect.Uint,reflect.Uint8,reflect.Uint16,reflect.Uint32,reflect.Uint64:
+				fieldValue = r.makeReqColumnData(col, v.Uint()*1000)
+			}
+		}
+	case fieldTypeGeo:
+		v := r.makeReqColumnData(col, value)
+		if str, ok := v.(string); ok {
+			fieldStringValue := strings.Split(str, ",")
+
+			var points []float64
+
+			for _, value := range fieldStringValue {
+
+				point, err := strconv.ParseFloat(value, 10)
+
+				if err == nil {
+					points = append(points, point)
+				}
+			}
+
+			fieldValue = points
+
+		} else {
+			fieldValue = v
 		}
 	}
 
