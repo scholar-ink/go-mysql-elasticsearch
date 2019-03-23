@@ -1,4 +1,4 @@
-module github.com/siddontang/go-mysql-elasticsearch
+module github.com/scholar-ink/go-mysql-elasticsearch
 
 require (
 	github.com/BurntSushi/toml v0.3.1

@@ -9,7 +9,7 @@ import (
 
 	"github.com/juju/errors"
 	"github.com/siddontang/go-log/log"
-	"github.com/siddontang/go-mysql-elasticsearch/elastic"
+	"github.com/scholar-ink/go-mysql-elasticsearch/elastic"
 	"github.com/siddontang/go-mysql/canal"
 )
 

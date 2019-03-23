@@ -49,10 +49,6 @@
   branch = "master"
   name = "github.com/siddontang/go-mysql"
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/siddontang/go-mysql-elasticsearch"
-
 [prune]
   go-tests = true
   unused-packages = true

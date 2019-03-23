@@ -70,18 +70,9 @@
   ]
   revision = "c6ab05a85eb86dc51a27ceed6d2f366a32874a24"
 
-[[projects]]
-  branch = "master"
-  name = "github.com/siddontang/go-mysql-elasticsearch"
-  packages = [
-    "elastic",
-    "river"
-  ]
-  revision = "7b48b8c785d3fc23d8dadebd5fafd0fba1654cbc"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7239b3d7c129f6d4430793b2a6fe5b8de3bcbd14ed95542fa3bf2581dd7b56a1"
+  inputs-digest = "3c6c3c166e4338dfba743b8547c02f4791957431aac8a30e6886d325d492df21"
   solver-name = "gps-cdcl"
   solver-version = 1

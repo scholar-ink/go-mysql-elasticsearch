@@ -10,7 +10,7 @@ import (
 
 	"github.com/juju/errors"
 	"github.com/siddontang/go-log/log"
-	"github.com/siddontang/go-mysql-elasticsearch/elastic"
+	"github.com/scholar-ink/go-mysql-elasticsearch/elastic"
 	"github.com/siddontang/go-mysql/canal"
 	"github.com/siddontang/go-mysql/mysql"
 	"github.com/siddontang/go-mysql/replication"
@@ -26,6 +26,7 @@ const (
 
 const (
 	fieldTypeList = "list"
+	fieldTypeNested = "nested"
 	// for the mysql int type to es date type
 	// set the [rule.field] created_time = ",date"
 	fieldTypeDate = "date"
@@ -507,7 +508,15 @@ func (r *River) getFieldValue(col *schema.TableColumn, fieldType string, value i
 		} else {
 			fieldValue = v
 		}
-
+	case fieldTypeNested:
+		v := r.makeReqColumnData(col, value)
+		if str, ok := v.(string); ok {
+			var data interface{}
+			json.Unmarshal([]byte(str),&data)
+			fieldValue = data
+		} else {
+			fieldValue = v
+		}
 	case fieldTypeDate:
 		if col.Type == schema.TYPE_NUMBER {
 			col.Type = schema.TYPE_DATETIME
